@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./style.css";
+import canvasScript from "./canvasScript";
+import ctaScript from "./ctaScript.js";
 
 function CanvasEditor() {
+  // adding text functionality
+  useEffect(() => {
+    // Call the canvas script logic when the component mounts
+    canvasScript();
+    ctaScript();
+  }, []);
+  // adding image functionlity
   function onChangeFile(e) {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -10,8 +19,8 @@ function CanvasEditor() {
       img.onload = function () {
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext("2d");
-        console.log(canvas.width, canvas.height);
-        ctx.drawImage(img, 0, 0, canvas.width / 2, canvas.height / 2);
+        ctx.globalCompositeOperation = "source-over";
+        ctx.drawImage(img, 56, 442, canvas.width / 2, canvas.height / 2);
       };
       img.src = e.target.result;
     };
@@ -24,10 +33,11 @@ function CanvasEditor() {
         <div className="left editor-container">
           <div className="canvas-container">
             <canvas
+              height={1080}
+              width={1080}
+              style={{ height: 400, width: 400 }}
               id="canvas"
               className="scaled-canvas"
-              width={500}
-              height={600}
             ></canvas>
             <div className="mask"></div>
           </div>
@@ -58,7 +68,6 @@ function CanvasEditor() {
                   onChange={onChangeFile}
                 ></input>
               </div>
-              {/* <ImageSelector /> */}
             </div>
 
             {/* Partition */}
