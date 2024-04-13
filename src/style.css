@@ -28,11 +28,6 @@
 canvas {
     border: 1px solid #ccc;
 }
-.scaled-canvas {
-    height: 400px;
-    width: 400px;
-    transform: scale(0.37);
-}
 
 
 /* Mask STYLING */

@@ -2,13 +2,33 @@ import React from "react";
 import "./style.css";
 
 function CanvasEditor() {
+  function onChangeFile(e) {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const img = new Image();
+      img.onload = function () {
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        console.log(canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width / 2, canvas.height / 2);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
   return (
     <>
       <div className="main-container">
         {/* Left column for editor */}
         <div className="left editor-container">
           <div className="canvas-container">
-            <canvas id="canvas" className="scaled-canvas"></canvas>
+            <canvas
+              id="canvas"
+              className="scaled-canvas"
+              width={500}
+              height={600}
+            ></canvas>
             <div className="mask"></div>
           </div>
         </div>
@@ -31,7 +51,12 @@ function CanvasEditor() {
                 <span className="image-text">
                   Change the ad creative image.
                 </span>
-                <input type="file" id="image-upload" accept="image/*"></input>
+                <input
+                  type="file"
+                  id="image-upload"
+                  accept="image/*"
+                  onChange={onChangeFile}
+                ></input>
               </div>
               {/* <ImageSelector /> */}
             </div>
