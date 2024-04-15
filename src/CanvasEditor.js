@@ -188,11 +188,31 @@ function CanvasEditor() {
     reader.readAsDataURL(file);
   }
 
+  // adding download functionality
+  function handleDownload() {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    // Redraw the background color
+    ctx.fillStyle = selectedColor; // Use the selected color
+    // Convert the canvas to an image and initiate download
+    const dataUrl = canvas.toDataURL("image/png");
+    const link = document.createElement("a");
+    link.href = dataUrl;
+    link.download = "canvas_image.png";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
   return (
     <>
       <div className="main-container">
         {/* Left column for editor */}
         <div className="left editor-container">
+          {/* Download button */}
+          <div className="download-button">
+            <button onClick={handleDownload}>Download</button>
+          </div>
           <div className="canvas-container">
             <canvas
               ref={canvasRef}

@@ -16,9 +16,24 @@
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: #05291f;
+  background-color: #a9d8cb42;
   background-size: cover;
   background-position: center;
+}
+.download-button button {
+  padding: 10px 20px;
+  margin-left: 25px;
+  margin-right: 0px;
+  font-size: 18px;
+  background-color: #FFF;
+  color: #000;
+  border: 1px solid;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.download-button button:hover {
+  background-color: #d2dce7; /* Change background color on hover */
 }
 
 .canvas-container {
@@ -52,7 +67,7 @@ canvas {
   width: 50vw;
   height: 100vh;
   position: relative;
-  background-color: #15f5ba;
+  /* background-color: #15f5ba; */
 }
 
 /* BOX FOR CUSTOMIZATION */
