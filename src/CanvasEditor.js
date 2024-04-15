@@ -159,7 +159,7 @@ function CanvasEditor() {
     }
     ctx.fillText(line, templateData.caption.position.x, y);
     // }
-  }, [inputText]);
+  }, [inputText, imagesLoaded]);
 
   const handleInputforCTA = (e) => {
     const text = e.target.value;
