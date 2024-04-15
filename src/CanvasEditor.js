@@ -51,7 +51,6 @@ function CanvasEditor() {
       if (newHistory.length > 5) {
         newHistory.pop();
       }
-      console.log(newHistory);
       return newHistory;
     });
   }
@@ -133,34 +132,34 @@ function CanvasEditor() {
 
   // adding text and cta functionality
   useEffect(() => {
-    if (imagesLoaded) {
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext("2d");
-      ctx.clearRect(0, 0, canvas.width, canvas.height / 3);
-      ctx.font = `${templateData.caption.font_size}px Arial`;
-      ctx.fillStyle = templateData.caption.text_color;
-      ctx.textAlign = templateData.caption.alignment;
-      const lineHeight = 24;
-      const lineSpacing = 20;
+    // if (imagesLoaded) {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height / 3);
+    ctx.font = `${templateData.caption.font_size}px Arial`;
+    ctx.fillStyle = templateData.caption.text_color;
+    ctx.textAlign = templateData.caption.alignment;
+    const lineHeight = 24;
+    const lineSpacing = 20;
 
-      const words = inputText.split(" ");
-      let line = "";
-      let y = templateData.caption.position.y;
-      for (let i = 0; i < words.length; i++) {
-        const testLine = line + words[i] + " ";
-        const metrics = ctx.measureText(testLine);
-        const testWidth = metrics.width;
-        if (testWidth > canvas.width / 2 && i > 0) {
-          ctx.fillText(line, templateData.caption.position.x, y);
-          line = words[i] + " ";
-          y += lineHeight + lineSpacing;
-        } else {
-          line = testLine;
-        }
+    const words = inputText.split(" ");
+    let line = "";
+    let y = templateData.caption.position.y;
+    for (let i = 0; i < words.length; i++) {
+      const testLine = line + words[i] + " ";
+      const metrics = ctx.measureText(testLine);
+      const testWidth = metrics.width;
+      if (testWidth > canvas.width / 2 && i > 0) {
+        ctx.fillText(line, templateData.caption.position.x, y);
+        line = words[i] + " ";
+        y += lineHeight + lineSpacing;
+      } else {
+        line = testLine;
       }
-      ctx.fillText(line, templateData.caption.position.x, y);
     }
-  }, [inputText, imagesLoaded]);
+    ctx.fillText(line, templateData.caption.position.x, y);
+    // }
+  }, [inputText]);
 
   const handleInputforCTA = (e) => {
     const text = e.target.value;
