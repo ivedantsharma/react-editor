@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import "./style.css";
-import { ChromePicker } from "react-color";
+import { SketchPicker } from "react-color";
 import templateData from "./templateData.json";
 
 function CanvasEditor() {
@@ -66,40 +66,92 @@ function CanvasEditor() {
     ));
   };
 
-  function wrapText(context, text, x, y, maxWidth, lineHeight) {
-    var words = text.split(" ");
-    var line = "";
-    for (var n = 0; n < words.length; n++) {
-      var testLine = line + words[n] + " ";
-      var metrics = context.measureText(testLine);
-      var testWidth = metrics.width;
-      if (testWidth > maxWidth && n > 0) {
-        context.fillText(line, x, y);
-        line = words[n] + " ";
-        y += lineHeight;
-      } else {
-        line = testLine;
-      }
-    }
-    context.fillText(line, x, y);
-  }
+  // function wrapText(context, text, x, y, maxWidth, lineHeight) {
+  //   var words = text.split(" ");
+  //   var line = "";
+  //   for (var n = 0; n < words.length; n++) {
+  //     var testLine = line + words[n] + " ";
+  //     var metrics = context.measureText(testLine);
+  //     var testWidth = metrics.width;
+  //     if (testWidth > maxWidth && n > 0) {
+  //       context.fillText(line, x, y);
+  //       line = words[n] + " ";
+  //       y += lineHeight;
+  //     } else {
+  //       line = testLine;
+  //     }
+  //   }
+  //   context.fillText(line, x, y);
+  // }
 
   // adding text and cta functionality
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height / 3);
+
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Load mask image
+    const maskImg = new Image();
+    maskImg.crossOrigin = "anonymous"; // Enable cross-origin request for the image
+    maskImg.onload = function () {
+      console.log("Mask image loaded"); // Log when mask image is loaded
+      ctx.drawImage(
+        maskImg,
+        templateData.image_mask.x,
+        templateData.image_mask.y,
+        templateData.image_mask.width,
+        templateData.image_mask.height
+      );
+
+      // Load stroke image
+      const strokeImg = new Image();
+      strokeImg.crossOrigin = "anonymous"; // Enable cross-origin request for the image
+      strokeImg.onload = function () {
+        console.log("Stroke image loaded"); // Log when stroke image is loaded
+        ctx.drawImage(
+          strokeImg,
+          templateData.image_mask.x,
+          templateData.image_mask.y,
+          templateData.image_mask.width,
+          templateData.image_mask.height
+        );
+
+        // Load design pattern image
+        const designPatternImg = new Image();
+        designPatternImg.crossOrigin = "anonymous"; // Enable cross-origin request for the image
+        designPatternImg.onload = function () {
+          console.log("Design pattern image loaded"); // Log when design pattern image is loaded
+          // Draw design pattern image on canvas (behind mask area)
+          ctx.drawImage(designPatternImg, 0, 0, canvas.width, canvas.height);
+
+          // Render caption text after loading all images
+          renderCaptionText(ctx);
+          console.log("Caption text rendered"); // Log when caption text is rendered
+        };
+        designPatternImg.src =
+          templateData.urls.design_pattern + "?random=" + Math.random(); // Add random query parameter to avoid CORS issues
+      };
+      strokeImg.src = templateData.urls.stroke + "?random=" + Math.random(); // Add random query parameter to avoid CORS issues
+    };
+    maskImg.src = templateData.urls.mask + "?random=" + Math.random(); // Add random query parameter to avoid CORS issues
+  }, [templateData]);
+
+  const renderCaptionText = (ctx) => {
+    const canvas = canvasRef.current;
     ctx.font = `${templateData.caption.font_size}px Arial`;
     ctx.fillStyle = templateData.caption.text_color;
     ctx.textAlign = templateData.caption.alignment;
-    const maxCharactersPerLine = 31;
-    const lineHeight = 24; // Adjust as needed
+    const maxCharactersPerLine = templateData.caption.max_characters_per_line;
+    const lineHeight = 24;
+    const x = templateData.caption.position.x;
+    let y = templateData.caption.position.y;
     const lineSpacing = 20; // Adjust spacing between lines as needed
 
-    // Split inputText into lines
     const words = inputText.split(" ");
     let line = "";
-    let y = templateData.caption.position.y;
+    // let y = templateData.caption.position.y;
     for (let i = 0; i < words.length; i++) {
       const testLine = line + words[i] + " ";
       const metrics = ctx.measureText(testLine);
@@ -113,7 +165,7 @@ function CanvasEditor() {
       }
     }
     ctx.fillText(line, templateData.caption.position.x, y);
-  }, [inputText]);
+  };
 
   const handleInputforCTA = (e) => {
     const text = e.target.value;
@@ -134,7 +186,7 @@ function CanvasEditor() {
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext("2d");
         ctx.globalCompositeOperation = "source-over";
-        ctx.drawImage(img, 56, 442, canvas.width / 2, canvas.height / 2);
+        ctx.drawImage(img, 56, 442, 970, 600);
       };
       img.src = e.target.result;
     };
@@ -154,7 +206,7 @@ function CanvasEditor() {
               style={{
                 height: 400,
                 width: 400,
-                backgroundColor: "#0369A1",
+                backgroundColor: "#FFF",
                 zIndex: 1,
               }}
               id="canvas"
@@ -294,7 +346,7 @@ function CanvasEditor() {
                   <div className="color-history">{renderColorHistory()}</div>
                   <button onClick={toggleColorPicker}>+</button>
                   {colorPickerOpen && (
-                    <ChromePicker
+                    <SketchPicker
                       className="color-picker"
                       color={selectedColor}
                       onChange={handleColorChange}

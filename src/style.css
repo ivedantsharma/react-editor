@@ -1,256 +1,251 @@
 /* WEBSITE */
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .main-container {
-    display: flex;
-    height: 100vh;
+  display: flex;
+  height: 100vh;
 }
 
 /* LEFT DIV */
 .left {
-    position: relative;
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    background-image: url("https://d273i1jagfl543.cloudfront.net/templates/global_temp_landscape_temp_10_Design_Pattern.png");
-    background-size: cover;
-    background-position: center;
+  position: relative;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: #05291f;
+  background-size: cover;
+  background-position: center;
 }
 
 .canvas-container {
-    position: relative;
-    top: 25%;
-    left: 25%;
-    width: 100%;
-    height: 100%;
+  position: relative;
+  top: 25%;
+  left: 25%;
+  width: 100%;
+  height: 100%;
 }
 
 /* CANVAS STYLING */
 canvas {
-    border: 5px solid #ccc;
-    width: 100%;
-    height: 100%;
+  border: 5px solid #ccc;
+  width: 100%;
+  height: 100%;
 }
-
 
 /* Mask STYLING */
 .mask {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
-
 
 /* RIGHT DIV */
 .right {
-    flex: 1;
-    float: right;
-    width: 50vw;
-    height: 100vh;
-    position: relative;
-    background-color: #15F5BA;
+  flex: 1;
+  float: right;
+  width: 50vw;
+  height: 100vh;
+  position: relative;
+  background-color: #15f5ba;
 }
-
 
 /* BOX FOR CUSTOMIZATION */
 .container {
-    background-color: #F0F3FF;
-    border: none;
-    border-radius: 50px;
-    width: 80%;
-    height: 60%;
-    margin-top: 10%;
-    position: absolute;
-    /* top: 5%; Adjust top position to center the inner div vertically */
-    left: 10%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+  background-color: #f0f3ff;
+  border: none;
+  border-radius: 50px;
+  width: 80%;
+  height: 60%;
+  margin-top: 10%;
+  position: absolute;
+  /* top: 5%; Adjust top position to center the inner div vertically */
+  left: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 /* HEADING */
-.heading{
-    background-color: #F0F3FF;
-    display: flex;
-    flex-direction: column;
-    flex-basis: 50px;
-    justify-content: center;
-    align-items: center;
-    margin-left: 7%;
-    margin-right: 7%;
+.heading {
+  background-color: #f0f3ff;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 50px;
+  justify-content: center;
+  align-items: center;
+  margin-left: 7%;
+  margin-right: 7%;
 }
 .main-heading {
-    font-size: 23px;
-    font-weight: bold;
+  font-size: 23px;
+  font-weight: bold;
 }
 .sub-heading {
-    font-size: 19px;
-    font-weight: 100;
-    color: grey;
+  font-size: 19px;
+  font-weight: 100;
+  color: grey;
 }
 
 /* IMAGES */
 .image-selector {
-    background-color: #F0F3FF;
-    display: flex;
-    flex-basis: 40px;
-    align-items: center;
-    border: 1px solid grey;
-    border-radius: 10px;
-    margin-left: 7%;
-    margin-right: 7%;
-    padding: 2px;
+  background-color: #f0f3ff;
+  display: flex;
+  flex-basis: 40px;
+  align-items: center;
+  border: 1px solid grey;
+  border-radius: 10px;
+  margin-left: 7%;
+  margin-right: 7%;
+  padding: 2px;
 }
 .image-icon {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-    vertical-align: middle; /* Align icon vertically */
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  vertical-align: middle; /* Align icon vertically */
 }
 .image-text {
-    flex: 1;
-    color: grey;
-    font-size: 17px;
-    margin-right: 10px;
-    vertical-align: middle; /* Align text vertically */
+  flex: 1;
+  color: grey;
+  font-size: 17px;
+  margin-right: 10px;
+  vertical-align: middle; /* Align text vertically */
 }
 .custom-file-upload {
-    position: relative;
-    display: inline-block;
-    overflow: hidden;
-    vertical-align: middle; /* Align icon vertically */
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: middle; /* Align icon vertically */
 }
-  
+
 .custom-file-upload input[type="file"] {
-    border: none;
-    display: none;
+  border: none;
+  display: none;
 }
-  
+
 .custom-file-upload span {
-    display: inline-block;
-    color: grey;
-    font-size: 17px;
-    border: none;
-    cursor: pointer;
+  display: inline-block;
+  color: grey;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
 }
 .custom-file-upload span:hover {
-    color: #0056b3;
+  color: #0056b3;
 }
 
 /* PARTITION */
 .partition {
-    display: flex;
-    margin-left: 7%;
-    margin-right: 7%;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+  display: flex;
+  margin-left: 7%;
+  margin-right: 7%;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 hr {
-    flex-grow: 1;
-    height: 1px;
-    background-color: grey;
-    border: none;
-    margin: 0 10px; 
+  flex-grow: 1;
+  height: 1px;
+  background-color: grey;
+  border: none;
+  margin: 0 10px;
 }
 .partition-text {
-    line-height: 1;
-    color: grey;
+  line-height: 1;
+  color: grey;
 }
 
 /* CONTENT SELECTOR */
 .content-selector {
-    background-color: #F0F3FF;
-    display: flex;
-    flex-basis: 40px;
-    align-items: flex-start;
-    border: 1px solid grey;
-    border-radius: 10px;
-    margin-left: 7%;
-    margin-right: 7%;
-    position: relative;
+  background-color: #f0f3ff;
+  display: flex;
+  flex-basis: 40px;
+  align-items: flex-start;
+  border: 1px solid grey;
+  border-radius: 10px;
+  margin-left: 7%;
+  margin-right: 7%;
+  position: relative;
 }
 
 .input-container {
-    font-size: 14px;
-    color: grey;
-    margin: 8px;
-    display: flex;
-    flex: 90%;
-    flex-basis: 40px;
-    flex-direction: column;
-    margin-right: 60px;
+  font-size: 14px;
+  color: grey;
+  margin: 8px;
+  display: flex;
+  flex: 90%;
+  flex-basis: 40px;
+  flex-direction: column;
+  margin-right: 60px;
 }
 
 input {
-    border: none;
-    background-color: #F0F3FF;
+  border: none;
+  background-color: #f0f3ff;
 }
 
 .content-emoji-container {
-    position: absolute;
-    right: 0;
-    width: 10%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+  position: absolute;
+  right: 0;
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
-
 
 /* CTA SELECTOR */
 .cta-selector {
-    background-color: #F0F3FF;
-    display: flex;
-    flex-basis: 40px;
-    align-items: flex-start;
-    border: 1px solid grey;
-    border-radius: 10px;
-    margin-left: 7%;
-    margin-right: 7%;
-    position: relative;
+  background-color: #f0f3ff;
+  display: flex;
+  flex-basis: 40px;
+  align-items: flex-start;
+  border: 1px solid grey;
+  border-radius: 10px;
+  margin-left: 7%;
+  margin-right: 7%;
+  position: relative;
 }
-
-  
 
 /* COLOR SELECTOR */
 .color-selector {
-    font-size: 14px;
-    color: grey;
-    display: flex;
-    flex-basis: 40px;
-    align-items: flex-start;
-    margin-left: 7%;
-    margin-right: 7%;
+  font-size: 14px;
+  color: grey;
+  display: flex;
+  flex-basis: 40px;
+  align-items: flex-start;
+  margin-left: 7%;
+  margin-right: 7%;
 }
 .color-picker-container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 .color-picker {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 .color-picker-container label {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 .color-history {
-    display: flex;
-    flex-direction: row-reverse;
-} 
+  display: flex;
+  flex-direction: row-reverse;
+}
 .color-picker-wrapper {
-    display: flex;
-    margin-top: 7px;
-} 
+  display: flex;
+  margin-top: 7px;
+}
 
-.color-picker-wrapper button, .color-circle {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    margin-left: 5px;
+.color-picker-wrapper button,
+.color-circle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin-left: 5px;
 }
