@@ -82,60 +82,61 @@ function CanvasEditor() {
     }
   };
 
-  const loadImages = async () => {
-    try {
-      const maskImage = await loadImage(
-        templateData.urls.mask + `?random=${Math.random()}`
-      );
-      const strokeImage = await loadImage(
-        templateData.urls.stroke + `?random=${Math.random()}`
-      );
-      const designPatternImage = await loadImage(
-        templateData.urls.design_pattern + `?random=${Math.random()}`
-      );
-
-      // Once images are loaded, draw them on the canvas in the correct order
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext("2d");
-
-      // Draw background color
-      // ctx.fillStyle = selectedColor; // Use the selected color
-      // ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Draw design pattern
-      ctx.drawImage(designPatternImage, 0, 0, canvas.width, canvas.height);
-
-      // Draw mask
-      ctx.drawImage(
-        maskImage,
-        templateData.image_mask.x,
-        templateData.image_mask.y,
-        templateData.image_mask.width,
-        templateData.image_mask.height
-      );
-
-      // Draw mask stroke
-      ctx.drawImage(
-        strokeImage,
-        templateData.image_mask.x,
-        templateData.image_mask.y,
-        templateData.image_mask.width,
-        templateData.image_mask.height
-      );
-
-      // Draw text elements (caption and CTA)
-      // ...
-
-      // Draw user-input text and CTA button above other elements
-      // ...
-    } catch (error) {
-      console.error("Error loading images:", error);
-      // Handle the error, e.g., show a message to the user
-    }
-  };
-
   // Call the loadImages function to load and draw the images
   useEffect(() => {
+    const loadImages = async () => {
+      try {
+        const maskImage = await loadImage(
+          templateData.urls.mask + `?random=${Math.random()}`
+        );
+        const strokeImage = await loadImage(
+          templateData.urls.stroke + `?random=${Math.random()}`
+        );
+        const designPatternImage = await loadImage(
+          templateData.urls.design_pattern + `?random=${Math.random()}`
+        );
+
+        // Once images are loaded, draw them on the canvas in the correct order
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+
+        // Draw background color
+        // ctx.fillStyle = selectedColor; // Use the selected color
+        // ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw design pattern
+        ctx.drawImage(designPatternImage, 0, 0, canvas.width, canvas.height);
+
+        // Draw mask
+        ctx.drawImage(
+          maskImage,
+          templateData.image_mask.x,
+          templateData.image_mask.y,
+          templateData.image_mask.width,
+          templateData.image_mask.height
+        );
+
+        // Draw mask stroke
+        ctx.drawImage(
+          strokeImage,
+          templateData.image_mask.x,
+          templateData.image_mask.y,
+          templateData.image_mask.width,
+          templateData.image_mask.height
+        );
+
+        console.log(setImagesLoaded);
+
+        // Draw text elements (caption and CTA)
+        // ...
+
+        // Draw user-input text and CTA button above other elements
+        // ...
+      } catch (error) {
+        console.error("Error loading images:", error);
+        // Handle the error, e.g., show a message to the user
+      }
+    };
     loadImages();
   }, []); // Empty dependency array to ensure this effect runs only once
 
