@@ -12,7 +12,7 @@ function CanvasEditor() {
   const [colorPickerOpen, setColorPickerOpen] = useState(false); // New state to track color picker visibility
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const ctaCoordinates = templateData.cta.position;
-  const { mask, stroke, design_pattern } = templateData.urls;
+  // const { mask, stroke, design_pattern } = templateData.urls;
 
   // Inline styles for positioning the CTA button
   const ctaButtonStyle = {
@@ -67,75 +67,84 @@ function CanvasEditor() {
     ));
   };
 
-  useEffect(() => {
-    const loadImage = async (url) => {
-      try {
-        const response = await fetch(url + `?random=${Math.random()}`);
-        const blob = await response.blob();
-        return URL.createObjectURL(blob);
-      } catch (error) {
-        console.error("Error loading image:", error);
+  // Inside useEffect or a function where you handle image loading
+  const loadImage = async (url) => {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Failed to load image");
       }
-    };
+      const blob = await response.blob();
+      return createImageBitmap(blob);
+    } catch (error) {
+      console.error("Error loading image:", error);
+      throw error; // Rethrow the error to handle it in the calling function
+    }
+  };
 
-    const loadImages = async () => {
-      const [maskUrl, strokeUrl, patternUrl] = await Promise.all([
-        loadImage(mask),
-        loadImage(stroke),
-        loadImage(design_pattern),
-      ]);
+  const loadImages = async () => {
+    try {
+      const maskImage = await loadImage(
+        templateData.urls.mask + `?random=${Math.random()}`
+      );
+      const strokeImage = await loadImage(
+        templateData.urls.stroke + `?random=${Math.random()}`
+      );
+      const designPatternImage = await loadImage(
+        templateData.urls.design_pattern + `?random=${Math.random()}`
+      );
 
+      // Once images are loaded, draw them on the canvas in the correct order
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
 
-      const promises = [];
+      // Draw background color
+      // ctx.fillStyle = selectedColor; // Use the selected color
+      // ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      promises.push(
-        new Promise((resolve) => {
-          const maskImg = new Image();
-          maskImg.onload = () => {
-            ctx.drawImage(maskImg, 0, 0, canvas.width, canvas.height);
-            resolve();
-          };
-          maskImg.src = maskUrl;
-        })
+      // Draw design pattern
+      ctx.drawImage(designPatternImage, 0, 0, canvas.width, canvas.height);
+
+      // Draw mask
+      ctx.drawImage(
+        maskImage,
+        templateData.image_mask.x,
+        templateData.image_mask.y,
+        templateData.image_mask.width,
+        templateData.image_mask.height
       );
 
-      promises.push(
-        new Promise((resolve) => {
-          const strokeImg = new Image();
-          strokeImg.onload = () => {
-            ctx.drawImage(strokeImg, 0, 0, canvas.width, canvas.height);
-            resolve();
-          };
-          strokeImg.src = strokeUrl;
-        })
+      // Draw mask stroke
+      ctx.drawImage(
+        strokeImage,
+        templateData.image_mask.x,
+        templateData.image_mask.y,
+        templateData.image_mask.width,
+        templateData.image_mask.height
       );
 
-      promises.push(
-        new Promise((resolve) => {
-          const patternImg = new Image();
-          patternImg.onload = () => {
-            ctx.drawImage(patternImg, 0, 0, canvas.width, canvas.height);
-            resolve();
-          };
-          patternImg.src = patternUrl;
-        })
-      );
+      // Draw text elements (caption and CTA)
+      // ...
 
-      await Promise.all(promises);
-      setImagesLoaded(true);
-    };
+      // Draw user-input text and CTA button above other elements
+      // ...
+    } catch (error) {
+      console.error("Error loading images:", error);
+      // Handle the error, e.g., show a message to the user
+    }
+  };
 
+  // Call the loadImages function to load and draw the images
+  useEffect(() => {
     loadImages();
-  }, [mask, stroke, design_pattern]);
+  }, []); // Empty dependency array to ensure this effect runs only once
 
   // adding text and cta functionality
   useEffect(() => {
     // if (imagesLoaded) {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height / 3);
+    ctx.clearRect(0, 0, canvas.width, canvas.height / 4);
     ctx.font = `${templateData.caption.font_size}px Arial`;
     ctx.fillStyle = templateData.caption.text_color;
     ctx.textAlign = templateData.caption.alignment;
